@@ -17,7 +17,7 @@ jQuery('#house').attr('disabled', 'disabled');
             var uRaion = jQuery(this).val();
             if(uRaion){
             jQuery.ajax({
-                url:"uchastki/raion.php",
+                url:"raion.php",
                 method:"POST",
                 data:{uRaionId:uRaion},
                 dataType:"text",
@@ -51,7 +51,7 @@ jQuery('#house').attr('disabled', 'disabled');
             var uCity = jQuery(this).val();
             if(uCity){
             jQuery.ajax({
-                url:"uchastki/city.php",
+                url:"city.php",
                 method:"POST",
                 data:{ucityId:uCity},
                 dataType:"text",
@@ -82,7 +82,7 @@ jQuery('#house').attr('disabled', 'disabled');
                 var uStreet = jQuery(this).val();
                 if(uStreet){
                 jQuery.ajax({
-                    url:"uchastki/street.php",
+                    url:"street.php",
                     method:"POST",
                     data:{ustreetId:uStreet},
                     dataType:"text",
@@ -108,7 +108,7 @@ jQuery('#house').attr('disabled', 'disabled');
                 var uInfo = jQuery(this).val();
                 if(uInfo){
                 jQuery.ajax({
-                    url:"uchastki/info.php",
+                    url:"info.php",
                     method:"POST",
                     data:{uinfoId:uInfo},
                     dataType:"text",
