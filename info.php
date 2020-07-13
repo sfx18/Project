@@ -1,10 +1,10 @@
 <?php
+require 'connectDB.php';
+require 'function.php';
 // ПОЛУЧАЕМ UHOUSEREGISTRY
 
 $uinfoId = $_POST["uinfoId"];
-$connect = mysqli_connect("localhost", "root", "", "reestr");
-$sql = "SELECT * FROM house WHERE uHouseRegistry = '$uinfoId'";
-$resultHouse = mysqli_query($connect, $sql);
+$resultHouse = fillSelect($connect, "SELECT * FROM house WHERE uHouseRegistry = '$uinfoId'");
 while ($row = mysqli_fetch_assoc($resultHouse)) {
 	$uHouseReg .= $row["uHouseRegistry"];
 }
@@ -12,8 +12,7 @@ echo "Номер дома: ".$uHouseReg;
 
 // ПОЛУЧАЕМ ID ВЕРХОВНОГО СОВЕТА, МЕСТНОГО ОКРУГА, УЧАСТКА, СЕЛЬКОГО ОКРУГА
 
-$sql = "SELECT * FROM info2 WHERE uHouseRegistry = '$uHouseReg'";
-$resultInfo = mysqli_query($connect, $sql);
+$resultInfo = fillSelect($connect, "SELECT * FROM info2 WHERE uHouseRegistry = '$uHouseReg'");
 
 while ($row = mysqli_fetch_assoc($resultInfo)) {
 	$BC = $row["OkrVS"];
@@ -25,8 +24,7 @@ while ($row = mysqli_fetch_assoc($resultInfo)) {
 
 // ТАБЛИЦА С ИЗБИРАТЕЛЬНЫМИ УЧАСТКАМИ
 
-$sql = "SELECT * FROM Uch WHERE id = '$Uch'";
-$resultUch = mysqli_query($connect, $sql);
+$resultUch = fillSelect($connect, "SELECT * FROM Uch WHERE id = '$Uch'");
 while ($row = mysqli_fetch_assoc($resultUch)) {
 	$izbirUch .= "</br>Избирательный участок №".$row["id"]."</br>Адрес: ".$row["adres"];
 }
@@ -35,18 +33,12 @@ echo $izbirUch;
 
 // ТАБЛИЦА С ВЕРХОВНЫМИ СОВЕТАМИ
 
-$sql = "SELECT * FROM BC WHERE id = '$BC'";
-$resultBC = mysqli_query($connect, $sql);
+$resultBC = fillSelect($connect, "SELECT * FROM BC WHERE id = '$BC'");
 while ($row = mysqli_fetch_assoc($resultBC)) {
-	$izbirOkrug .= "</br>Избирательный округ №".$row["id"]." <".$row["BC_name"]."> </br>Центр округа: ".$row["adres"];
+	$izbirOkrug .= "</br>Избирательный округ по выборам Верховного Совета №".$row["id"]." <".$row["BC_name"]."> </br>Центр округа: ".$row["adres"];
 }
 
 echo $izbirOkrug."</br>Местный округ".$MO = $MO == 0 ? ': Нет округа' : ' №'.$MO;
-
-if(is_null($SO)){}
-else{
-	echo "</br>Сельский округ №".$SO;
-}
-
+echo $SO = $SO == 0 ? '' : '</br>Сельский округ №'.$SO;
 
 ?>

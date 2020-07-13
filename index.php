@@ -26,7 +26,7 @@
     </select>
 
     <div class="info"></div>
-        <div class='button js-button-campaign'><span>Показать</span></div>;
+        <div class='button js-button-campaign'><span>Показать</span></div>
         <div class="overlay js-overlay-campaign">
 	    	<div class="popup js-popup-campaign">
 	    		 <div class="content"></div>
