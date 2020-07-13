@@ -39,6 +39,7 @@ jQuery(document).ready(function(){
             jQuery('#street').html('<option value="">-----------------------------</option>'); 
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
+            jQuery('.js-button-campaign').css('display', 'none');
         }
     });
 
@@ -66,6 +67,7 @@ jQuery(document).ready(function(){
             jQuery('#street').html('<option value="">-----------------------------</option>'); 
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
+            jQuery('.js-button-campaign').css('display', 'none');
         }
     });
 
@@ -90,6 +92,7 @@ jQuery(document).ready(function(){
             jQuery('#house').attr('disabled', 'disabled');
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
+            jQuery('.js-button-campaign').css('display', 'none');
         }
     });
 
@@ -111,6 +114,7 @@ jQuery(document).ready(function(){
             });
         }else{
             jQuery('.info').text('');
+            jQuery('.js-button-campaign').css('display', 'none');
         }
     });
 
@@ -147,7 +151,7 @@ jQuery(document).ready(function(){
                     });
                 }
             });
-        }
+        }else{jQuery('.js-button-campaign').css('display', 'none');}
     });
 });
 
