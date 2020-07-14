@@ -4,6 +4,8 @@
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/script.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -34,6 +36,7 @@
 	    	</div>
 	    </div>
     </div>
-
+    <div id="map" style="height: 300px; width: 400px;"></div>
+    
 </body>
 </html>

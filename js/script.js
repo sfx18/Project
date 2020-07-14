@@ -1,6 +1,5 @@
 jQuery(document).ready(function(){          
 
-
     jQuery('#raion').append('<option value="1">ГРИГОРИОПОЛЬСКИЙ Р-Н</option>');
     jQuery('#raion').append('<option value="2">СЛОБОДЗЕЙСКИЙ Р-Н</option>');
     jQuery('#raion').append('<option value="3">ТИРАСПОЛЬ</option>');
@@ -86,6 +85,7 @@ jQuery(document).ready(function(){
                     jQuery('#house').removeAttr('disabled');
                     jQuery('#house').html(data);
                     jQuery('.info').text('');
+                    testLayer.removeLayer([markers]);
                 }
             });
         }else{
@@ -93,6 +93,7 @@ jQuery(document).ready(function(){
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
+            testLayer.removeLayer([markers]);
         }
     });
 
@@ -110,11 +111,19 @@ jQuery(document).ready(function(){
                 success:function(data){
                     jQuery('.info').html(data);
                     jQuery('.js-button-campaign').show();
+                    var lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
+                    var lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
+                    var testLayer = new L.layerGroup();
+                    var markers = L.marker([lon, lat]).addTo(testLayer);
+                    
+                    map.addLayer(testLayer);
+                    
                 }
             });
         }else{
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
+            testLayer.removeLayer([markers]);
         }
     });
 
@@ -153,5 +162,12 @@ jQuery(document).ready(function(){
             });
         }else{jQuery('.js-button-campaign').css('display', 'none');}
     });
+    var map = L.map('map').setView([46.8191, 29.6480], 11);
+    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: ['a','b','c']
+}).addTo(map);
+    map.addLayer(layer);
+
 });
 

@@ -1,6 +1,7 @@
 <?php
 require 'connectDB.php';
 require 'function.php';
+
 // ПОЛУЧАЕМ UHOUSEREGISTRY
 
 $uinfoId = $_POST["uinfoId"];
@@ -26,6 +27,8 @@ while ($row = mysqli_fetch_assoc($resultInfo)) {
 
 $resultUch = fillSelect($connect, "SELECT * FROM Uch WHERE id = '$Uch'");
 while ($row = mysqli_fetch_assoc($resultUch)) {
+	$lon = $row['lon'];
+	$lat = $row['lat'];
 	$izbirUch .= "</br>Избирательный участок №".$row["id"]."</br>Адрес: ".$row["adres"];
 }
 
@@ -40,5 +43,6 @@ while ($row = mysqli_fetch_assoc($resultBC)) {
 
 echo $izbirOkrug."</br>Местный округ".$MO = $MO == 0 ? ': Нет округа' : ' №'.$MO;
 echo $SO = $SO == 0 ? '' : '</br>Сельский округ №'.$SO;
-
+echo "Номер дома: ".$lon;
+echo '<div class="lonlat" data-attr-lon='.$lon.' data-attr-lat='.$lat.'></div>'
 ?>
