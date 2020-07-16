@@ -11,8 +11,16 @@ jQuery(document).ready(function(){
     jQuery('#street').attr('disabled', 'disabled');
     jQuery('#house').attr('disabled', 'disabled');
 
+    var map = L.map('map').setView([46.8191, 29.6480], 11);
+    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: ['a','b','c']
+}).addTo(map);
+    map.addLayer(layer);
+
  // ЗАПОЛНЕНИЕ ДАННЫМИ SELECT CITY   
     jQuery('#raion').change(function(){
+
         var uRaion = jQuery(this).val();
         if(uRaion){
             jQuery.ajax({
@@ -85,7 +93,7 @@ jQuery(document).ready(function(){
                     jQuery('#house').removeAttr('disabled');
                     jQuery('#house').html(data);
                     jQuery('.info').text('');
-                    testLayer.removeLayer([markers]);
+                    map.removeLayer([testLayer]);
                 }
             });
         }else{
@@ -93,7 +101,7 @@ jQuery(document).ready(function(){
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
-            testLayer.removeLayer([markers]);
+            map.removeLayer([testLayer]);
         }
     });
 
@@ -114,8 +122,7 @@ jQuery(document).ready(function(){
                     var lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
                     var lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
                     var testLayer = new L.layerGroup();
-                    var markers = L.marker([lon, lat]).addTo(testLayer);
-                    
+                    var markers = L.marker([lon, lat]).addTo(testLayer).addTo(map);
                     map.addLayer(testLayer);
                     
                 }
@@ -123,7 +130,7 @@ jQuery(document).ready(function(){
         }else{
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
-            testLayer.removeLayer([markers]);
+            map.removeLayer([testLayer]);
         }
     });
 
@@ -162,12 +169,7 @@ jQuery(document).ready(function(){
             });
         }else{jQuery('.js-button-campaign').css('display', 'none');}
     });
-    var map = L.map('map').setView([46.8191, 29.6480], 11);
-    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    subdomains: ['a','b','c']
-}).addTo(map);
-    map.addLayer(layer);
+
 
 });
 
