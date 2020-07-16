@@ -1,19 +1,6 @@
-.content{
-    height: 100%;
+.wrapper-select{
     width: 100%;
-    font-size: 18px; 
-    font-family: sans-serif;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    line-height: 1.5;
-}
-.info{
-    font-size: 18px; 
-    font-family: sans-serif; 
-    margin: 5px;
-    float: left;
-    line-height: 1.5;
+    min-height: 60px;
 }
 .select-css { 
     font-size: 16px; 
@@ -24,7 +11,6 @@
     padding: 10px;
     border: 2px solid rgb(180, 27, 7);
     border-radius: 10px;
-    float: left;
     background-color: #fff; 
 }  
 .select-css:focus { 
@@ -41,17 +27,18 @@
     background-color: transparent;
     border: 0;
     padding-right: 15px;
-    height: 31px;
-    width: 220px;
 }
-
-
+.info{
+    font-size: 18px; 
+    font-family: sans-serif; 
+    margin: 5px;
+    line-height: 1.5;
+}
 .button {
     display: none;
+    margin-bottom: 10px;
 	width: 250px;
     height: 45px;
-    float: left;
-    clear: left;
     text-align: center;
 	border-radius: 5px;
 	background-color: #ffffff;
@@ -66,6 +53,20 @@
     font-size: 15px;
 	text-transform: uppercase;
 }
+#map{
+    height: 500px;
+    width: 500px;
+}
+
+.content{
+    height: 100%;
+    width: 100%;
+    font-size: 18px; 
+    font-family: sans-serif;
+    text-align: center;
+    line-height: 1.5;
+}
+
 
 .overlay {
 	position: absolute;

@@ -12,7 +12,7 @@ echo 'Номер дома: '.$uHouseReg;
 
 // ПОЛУЧАЕМ ID ВЕРХОВНОГО СОВЕТА, МЕСТНОГО ОКРУГА, УЧАСТКА, СЕЛЬКОГО ОКРУГА
 
-$resultInfo = fillSelect($connect, "SELECT * FROM house WHERE uHouseRegistry = '$houseId'");
+$resultInfo = fillSelect($connect, "SELECT * FROM info2 WHERE uHouseRegistry = '$uHouseReg'");
 
 while ($row = mysqli_fetch_assoc($resultInfo)) {
 	$BC = $row['OkrVS'];
