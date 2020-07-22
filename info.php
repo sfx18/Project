@@ -43,6 +43,5 @@ while ($row = mysqli_fetch_assoc($resultBC)) {
 
 echo $izbirOkrug."</br>Местный округ".$MO = $MO == 0 ? ': Нет округа' : ' №'.$MO;
 echo $SO = $SO == 0 ? '' : '</br>Сельский округ №'.$SO;
-echo "Номер дома: ".$lon;
-echo '<div class="lonlat" data-attr-lon='.$lon.' data-attr-lat='.$lat.'></div>'
+echo '<div class="lonlat" data-attr-lon='.$lon.' data-attr-lat='.$lat.' data-attr-uch='.$Uch.'></div>'
 ?>

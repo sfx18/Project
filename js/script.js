@@ -11,12 +11,28 @@ jQuery(document).ready(function(){
     jQuery('#street').attr('disabled', 'disabled');
     jQuery('#house').attr('disabled', 'disabled');
 
-    var map = L.map('map').setView([46.8191, 29.6480], 11);
-    var layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    subdomains: ['a','b','c']
-}).addTo(map);
-    map.addLayer(layer);
+   
+
+//     map = L.map('map').setView([46.8191, 29.6480], 9);
+//     layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+//     subdomains: ['a','b','c']
+// }).addTo(map);
+//     map.addLayer(layer);
+    //map.removeLayer(layer);
+
+    // var lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
+    // var lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
+    // var hydMarker = new L.Marker([17.385044, 78.486671]);
+    // var vskpMarker = new L.Marker([17.686816, 83.218482]);
+    // var vjwdMarker = new L.Marker([16.506174, 80.648015]);
+    // var markersLayer = new L.layerGroup([hydMarker, vskpMarker, vjwdMarker]);
+    // var markers = L.marker([lon, lat]).addTo(testLayer).addTo(map);
+    // map.addLayer(testLayer);
+    // markersLayer.addTo(map);
+    // markersLayer.removeLayer(hydMarker);
+    
+    
 
  // ЗАПОЛНЕНИЕ ДАННЫМИ SELECT CITY   
     jQuery('#raion').change(function(){
@@ -93,7 +109,6 @@ jQuery(document).ready(function(){
                     jQuery('#house').removeAttr('disabled');
                     jQuery('#house').html(data);
                     jQuery('.info').text('');
-                    map.removeLayer([testLayer]);
                 }
             });
         }else{
@@ -101,7 +116,6 @@ jQuery(document).ready(function(){
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
-            map.removeLayer([testLayer]);
         }
     });
 
@@ -119,18 +133,28 @@ jQuery(document).ready(function(){
                 success:function(data){
                     jQuery('.info').html(data);
                     jQuery('.js-button-campaign').show();
-                    var lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
-                    var lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
-                    var testLayer = new L.layerGroup();
-                    var markers = L.marker([lon, lat]).addTo(testLayer).addTo(map);
-                    map.addLayer(testLayer);
-                    
+                    // map = L.map('map').setView([46.8191, 29.6480], 9);
+                    // layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    // subdomains: ['a','b','c']
+                    // }).addTo(map);
+                    // map.addLayer(layer);
+                    // jQuery('#map').show();
+                    // lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
+                    // lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
+                    // Uch = document.querySelector('.lonlat').getAttribute('data-attr-uch');
+                    // map.setView([lon, lat], 16);
+                    // var markerOptions = {
+                    //     title: 'Участок №'+Uch
+                    // }
+                    // Marker = new L.Marker([lon, lat], markerOptions);
+                    // markersLayer = new L.layerGroup([Marker]);
+                    // markersLayer.addTo(map);
                 }
             });
         }else{
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
-            map.removeLayer([testLayer]);
         }
     });
 
@@ -167,7 +191,9 @@ jQuery(document).ready(function(){
                     });
                 }
             });
-        }else{jQuery('.js-button-campaign').css('display', 'none');}
+        }else{
+            jQuery('.js-button-campaign').css('display', 'none');
+        }
     });
 
 
