@@ -52,6 +52,7 @@ jQuery(document).ready(function(){
                     jQuery('#street').html('<option value="">-----------------------------</option>');
                     jQuery('#house').html('<option value="">-----------------------------</option>');
                     jQuery('.info').text('');
+                    jQuery('#map').text('');
                 }
             });
         }else{
@@ -63,6 +64,7 @@ jQuery(document).ready(function(){
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
+            jQuery('#map').text('');
         }
     });
 
@@ -82,6 +84,7 @@ jQuery(document).ready(function(){
                     jQuery('#street').html(data);
                     jQuery('#house').html('<option value="">-----------------------------</option>');
                     jQuery('.info').text('');
+                    jQuery('#map').text('');
                 }
             });
         }else{
@@ -91,6 +94,7 @@ jQuery(document).ready(function(){
             jQuery('#house').html('<option value="">-----------------------------</option>');
             jQuery('.info').text('');
             jQuery('.js-button-campaign').css('display', 'none');
+            jQuery('#map').text('');
         }
     });
 
@@ -109,6 +113,7 @@ jQuery(document).ready(function(){
                     jQuery('#house').removeAttr('disabled');
                     jQuery('#house').html(data);
                     jQuery('.info').text('');
+                    jQuery('#map').text('');
                 }
             });
         }else{
@@ -132,24 +137,64 @@ jQuery(document).ready(function(){
                 dataType:"html",
                 success:function(data){
                     jQuery('.info').html(data);
-                    jQuery('.js-button-campaign').show();
-                    // map = L.map('map').setView([46.8191, 29.6480], 9);
-                    // layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                    // subdomains: ['a','b','c']
-                    // }).addTo(map);
-                    // map.addLayer(layer);
-                    // jQuery('#map').show();
-                    // lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
-                    // lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
-                    // Uch = document.querySelector('.lonlat').getAttribute('data-attr-uch');
-                    // map.setView([lon, lat], 16);
-                    // var markerOptions = {
-                    //     title: 'Участок №'+Uch
-                    // }
-                    // Marker = new L.Marker([lon, lat], markerOptions);
-                    // markersLayer = new L.layerGroup([Marker]);
-                    // markersLayer.addTo(map);
+                    jQuery('.js-button-campaign').show();  
+                        // map = L.map('map').setView([46.8191, 29.6480], 9);
+                        // layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                        // subdomains: ['a','b','c']
+                        // }).addTo(map);
+                        // map.addLayer(layer);
+                        // jQuery('#map').show();
+                         lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
+                         lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
+                         Uch = document.querySelector('.lonlat').getAttribute('data-attr-uch');  
+                        // map.setView([lon, lat], 16);
+                        // var markerOptions = {
+                        //     title: 'Участок №'+Uch
+                        // }
+                        // Marker = new L.Marker([lon, lat], markerOptions);
+                        // markersLayer = new L.layerGroup([Marker]);
+                        // markersLayer.addTo(map);
+                        jQuery('#map').text('');
+                        ymaps.ready(init);
+    function init(){
+        // Создание карты.
+        var myMap = new ymaps.Map("map", {
+            // Координаты центра карты.
+            // Порядок по умолчанию: «широта, долгота».
+            // Чтобы не определять координаты центра карты вручную,
+            // воспользуйтесь инструментом Определение координат.
+            center: [lon, lat],
+            // Уровень масштабирования. Допустимые значения:
+            // от 0 (весь мир) до 19.
+            zoom: 16
+
+        });
+        
+        myGeoObject = new ymaps.GeoObject({
+            // Описание геометрии.
+            geometry: {
+                type: "Point",
+                coordinates: [lon, lat]
+            },
+            // Свойства.
+            properties: {
+                // Контент метки.
+                iconContent: 'Участок №'+Uch
+            }
+        }, {
+            // Опции.
+            // Иконка метки будет растягиваться под размер ее содержимого.
+            preset: 'islands#blackStretchyIcon',
+            // Метку можно перемещать.
+            draggable: false
+        })
+
+        myMap.geoObjects
+        .add(myGeoObject)
+
+    }
+                    
                 }
             });
         }else{

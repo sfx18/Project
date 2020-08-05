@@ -54,9 +54,8 @@
 	text-transform: uppercase;
 }
 #map{
-    display: none;
     height: 500px;
-    width: 500px;
+    width: 700px;
     z-index: 1;
 }
 

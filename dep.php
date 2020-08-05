@@ -24,11 +24,22 @@ while ($row = mysqli_fetch_assoc($resultInfo)) {
 
 // ТАБЛИЦА С ДЕПУТАТАМИ
 
+echo '<br>Верх Сов.';
+
+$resultDep = fillSelect($connect, "SELECT * FROM depvs WHERE OkrVS = '$BC'");
+while ($row = mysqli_fetch_assoc($resultDep)){
+	$dep = $row['info'];
+}
+echo '</br>'.$dep;
+
+echo '<br>Местн';
+
 $resultDep = fillSelect($connect, "SELECT * FROM dep WHERE uDistrict = '$uDistrict' AND OkrMO = '$MO'");
 while ($row = mysqli_fetch_assoc($resultDep)){
 	$dep = $row['info'];
 }
 echo '</br>'.$dep;
+
 
 
 ?>
