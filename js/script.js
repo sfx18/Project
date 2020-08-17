@@ -1,4 +1,7 @@
+
 jQuery(document).ready(function(){          
+
+    var uRaion, uCity, uStreet, uHouse, raion, city, street, house, adres;
 
     jQuery('#raion').append('<option value="1">ГРИГОРИОПОЛЬСКИЙ Р-Н</option>');
     jQuery('#raion').append('<option value="2">СЛОБОДЗЕЙСКИЙ Р-Н</option>');
@@ -37,7 +40,8 @@ jQuery(document).ready(function(){
  // ЗАПОЛНЕНИЕ ДАННЫМИ SELECT CITY   
     jQuery('#raion').change(function(){
 
-        var uRaion = jQuery(this).val();
+        uRaion = jQuery(this).val();
+        raion = jQuery('#raion option:selected').text();
         if(uRaion){
             jQuery.ajax({
                 url:"city.php",
@@ -53,6 +57,7 @@ jQuery(document).ready(function(){
                     jQuery('#house').html('<option value="">-----------------------------</option>');
                     jQuery('.info').text('');
                     jQuery('#map').text('');
+                    jQuery('.js-button-campaign').css('display', 'none');
                 }
             });
         }else{
@@ -71,7 +76,8 @@ jQuery(document).ready(function(){
 
 // ЗАПОЛНЕНИЕ ДАННЫМИ SELECT STREET
     jQuery('#city').change(function(){
-    var uCity = jQuery(this).val();
+    uCity = jQuery(this).val();
+    city = jQuery('#city option:selected').text();
         if(uCity){
             jQuery.ajax({
                 url:"street.php",
@@ -85,6 +91,7 @@ jQuery(document).ready(function(){
                     jQuery('#house').html('<option value="">-----------------------------</option>');
                     jQuery('.info').text('');
                     jQuery('#map').text('');
+                    jQuery('.js-button-campaign').css('display', 'none');
                 }
             });
         }else{
@@ -102,7 +109,8 @@ jQuery(document).ready(function(){
 
 // ЗАПОЛНЕНИЕ ДАННЫМИ SELECT HOUSE
     jQuery('#street').change(function(){
-    var uStreet = jQuery(this).val();
+    uStreet = jQuery(this).val();
+    street = jQuery('#street option:selected').text();
         if(uStreet){
             jQuery.ajax({
                 url:"house.php",
@@ -114,6 +122,7 @@ jQuery(document).ready(function(){
                     jQuery('#house').html(data);
                     jQuery('.info').text('');
                     jQuery('#map').text('');
+                    jQuery('.js-button-campaign').css('display', 'none');
                 }
             });
         }else{
@@ -128,72 +137,90 @@ jQuery(document).ready(function(){
 
 // ЗАПОЛНЕНИЕ ДАННЫМИ DIV INFO
     jQuery('#house').change(function(){
-    var uInfo = jQuery(this).val();
-        if(uInfo){
+    uHouse = jQuery(this).val();
+    house = jQuery('#house option:selected').text();
+        if(uHouse){
             jQuery.ajax({
                 url:"info.php",
                 method:"POST",
-                data:{uinfoId:uInfo},
+                data:{uinfoId:uHouse},
                 dataType:"html",
                 success:function(data){
                     jQuery('.info').html(data);
                     jQuery('.js-button-campaign').show();  
-                        // map = L.map('map').setView([46.8191, 29.6480], 9);
-                        // layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                        // subdomains: ['a','b','c']
-                        // }).addTo(map);
-                        // map.addLayer(layer);
-                        // jQuery('#map').show();
+                        
                          lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
                          lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
                          Uch = document.querySelector('.lonlat').getAttribute('data-attr-uch');  
-                        // map.setView([lon, lat], 16);
-                        // var markerOptions = {
-                        //     title: 'Участок №'+Uch
-                        // }
-                        // Marker = new L.Marker([lon, lat], markerOptions);
-                        // markersLayer = new L.layerGroup([Marker]);
-                        // markersLayer.addTo(map);
+                        
                         jQuery('#map').text('');
+
+                        function init(){
+                            // Создание карты.
+                            var myMap = new ymaps.Map("map", {
+                                // Координаты центра карты.
+                                // Порядок по умолчанию: «широта, долгота».
+                                // Чтобы не определять координаты центра карты вручную,
+                                // воспользуйтесь инструментом Определение координат.
+                                center: [lon, lat],
+                                // Уровень масштабирования. Допустимые значения:
+                                // от 0 (весь мир) до 19.
+                                zoom: 16
+                        
+                            });
+                            
+                            myGeoObject = new ymaps.GeoObject({
+                                // Описание геометрии.
+                                geometry: {
+                                    type: "Point",
+                                    coordinates: [lon, lat]
+                                },
+                                // Свойства.
+                                properties: {
+                                    // Контент метки.
+                                    iconContent: 'Участок №'+Uch
+                                }
+                            }, {
+                                // Опции.
+                                // Иконка метки будет растягиваться под размер ее содержимого.
+                                preset: 'islands#blackStretchyIcon',
+                                // Метку можно перемещать.
+                                draggable: false
+                            })
+                        
+                            myMap.geoObjects
+                            .add(myGeoObject)
+                        
+                            // ymaps.route(['Тирасполь, Приднестровье, Молдова, Одесская 88/4', 'Бендеры']).then(function(route){
+                            //     myMap.geoObjects.add(route);
+                            // },
+                            // function(error){
+                            //     alert('Ошибка' +error.message);
+                            // }
+                            // );
+                            var multiRoute = new ymaps.multiRouter.MultiRoute({   
+                                // Точки маршрута. Точки могут быть заданы как координатами, так и адресом. 
+                                referencePoints: [
+                                    raion +', '+ city +', '+ street +', '+ house,
+                                    [lon, lat], // улица Льва Толстого.
+                                ],
+                                params: {
+                                    // Тип маршрута: на общественном транспорте.
+                                    routingMode: "pedestrian"  
+                                  }
+                            }, {
+                                  // Автоматически устанавливать границы карты так,
+                                  // чтобы маршрут был виден целиком.
+                                  boundsAutoApply: true
+                            });
+                            
+                            // Добавление маршрута на карту.
+                            myMap.geoObjects.add(multiRoute);
+                            
+                        }
+                    
                         ymaps.ready(init);
-    function init(){
-        // Создание карты.
-        var myMap = new ymaps.Map("map", {
-            // Координаты центра карты.
-            // Порядок по умолчанию: «широта, долгота».
-            // Чтобы не определять координаты центра карты вручную,
-            // воспользуйтесь инструментом Определение координат.
-            center: [lon, lat],
-            // Уровень масштабирования. Допустимые значения:
-            // от 0 (весь мир) до 19.
-            zoom: 16
-
-        });
-        
-        myGeoObject = new ymaps.GeoObject({
-            // Описание геометрии.
-            geometry: {
-                type: "Point",
-                coordinates: [lon, lat]
-            },
-            // Свойства.
-            properties: {
-                // Контент метки.
-                iconContent: 'Участок №'+Uch
-            }
-        }, {
-            // Опции.
-            // Иконка метки будет растягиваться под размер ее содержимого.
-            preset: 'islands#blackStretchyIcon',
-            // Метку можно перемещать.
-            draggable: false
-        })
-
-        myMap.geoObjects
-        .add(myGeoObject)
-
-    }
+                        
                     
                 }
             });
