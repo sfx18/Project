@@ -148,7 +148,7 @@ jQuery(document).ready(function(){
                 success:function(data){
                     jQuery('.info').html(data);
                     jQuery('.js-button-campaign').show();  
-                        
+                    
                          lon = document.querySelector('.lonlat').getAttribute('data-attr-lon');
                          lat = document.querySelector('.lonlat').getAttribute('data-attr-lat');
                          Uch = document.querySelector('.lonlat').getAttribute('data-attr-uch');  
@@ -160,8 +160,6 @@ jQuery(document).ready(function(){
                             var myMap = new ymaps.Map("map", {
                                 // Координаты центра карты.
                                 // Порядок по умолчанию: «широта, долгота».
-                                // Чтобы не определять координаты центра карты вручную,
-                                // воспользуйтесь инструментом Определение координат.
                                 center: [lon, lat],
                                 // Уровень масштабирования. Допустимые значения:
                                 // от 0 (весь мир) до 19.
@@ -190,19 +188,19 @@ jQuery(document).ready(function(){
                         
                             myMap.geoObjects
                             .add(myGeoObject)
+
+                            if(raion == 'ТИРАСПОЛЬ' || raion == 'БЕНДЕРЫ'){
+                                adres = 'Молдова, Приднестровье, '+ city +', '+ street +', '+ house;
+                            }else{
+                                adres = 'Молдова, Приднестровье, '+ raion +', '+ city +', '+ street +', '+ house;
+                            }
                         
-                            // ymaps.route(['Тирасполь, Приднестровье, Молдова, Одесская 88/4', 'Бендеры']).then(function(route){
-                            //     myMap.geoObjects.add(route);
-                            // },
-                            // function(error){
-                            //     alert('Ошибка' +error.message);
-                            // }
-                            // );
+                            alert(adres);
                             var multiRoute = new ymaps.multiRouter.MultiRoute({   
                                 // Точки маршрута. Точки могут быть заданы как координатами, так и адресом. 
                                 referencePoints: [
-                                    raion +', '+ city +', '+ street +', '+ house,
-                                    [lon, lat], // улица Льва Толстого.
+                                    adres,
+                                    [lon, lat], 
                                 ],
                                 params: {
                                     // Тип маршрута: на общественном транспорте.
